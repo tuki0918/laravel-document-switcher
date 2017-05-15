@@ -1,23 +1,20 @@
 module.exports = {
   entry: './src/index.tsx',
   output: {
-    filename: './dist/bundle.js'
+    filename: "bundle.js",
+    path: __dirname + "/dist"
   },
 
-  devtool: 'source-map',
+  // Enable sourcemaps for debugging webpack's output.
+  devtool: "source-map",
 
   resolve: {
     extensions: ['.ts', '.tsx', '.js']
   },
 
   module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: [
-          {loader: 'ts-loader'}
-        ]
-      }
+    loaders: [
+      { test: /\.tsx?$/, loader: 'ts-loader' }
     ]
   }
 };

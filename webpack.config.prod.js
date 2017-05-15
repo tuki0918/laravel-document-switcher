@@ -3,7 +3,8 @@ const webpack = require('webpack');
 module.exports = {
   entry: "./src/index.tsx",
   output: {
-    filename: "./dist/bundle.js"
+    filename: "bundle.js",
+    path: __dirname + "/dist"
   },
 
   resolve: {
@@ -23,13 +24,8 @@ module.exports = {
     })
   ],
   module: {
-    rules: [
-      {
-        test: /\.tsx?$/,
-        use: [
-          {loader: "ts-loader"}
-        ]
-      }
+    loaders: [
+      { test: /\.tsx?$/, loader: 'ts-loader' }
     ]
   }
 };
