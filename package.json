@@ -9,6 +9,7 @@
   "devDependencies": {
     "@types/react": "^15.0.24",
     "@types/react-dom": "^15.5.0",
+    "@types/react-redux": "^4.4.40",
     "ts-loader": "^2.0.3",
     "typescript": "^2.3.2",
     "webpack": "^2.5.1"
@@ -16,6 +17,8 @@
   "dependencies": {
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "react-router": "^4.1.1"
+    "react-redux": "^5.0.4",
+    "react-router": "^4.1.1",
+    "redux": "^3.6.0"
   }
 }
