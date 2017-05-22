@@ -5,7 +5,7 @@
     "noImplicitThis": true,
     "alwaysStrict": true,
     "moduleResolution": "node",
-    "outDir": "./dist/",
+    "outDir": "./extension/dist/",
     "sourceMap": true,
     "noImplicitAny": true,
     "lib": ["dom", "ES2017"],
