@@ -1,11 +1,12 @@
 import { combineReducers } from 'redux';
-import { favorites, operationFavorite } from './reducers/favorites';
-import { feeds } from './reducers/feeds';
+import { favorites } from './reducers/favorites';
 import { setting } from './reducers/setting';
+import { versions } from './reducers/versions';
+import { tab } from './reducers/tab';
 
 export default combineReducers({
     setting: setting,
-    feeds: feeds,
+    versions: versions,
     favorites: favorites,
-    isFavorite: operationFavorite,
+    tab: tab,
 });

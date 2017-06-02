@@ -38,33 +38,22 @@ export const setLocalStorage = (obj) => {
 };
 
 /**
- * お気に入りをストレージに保存する
- * @param {Array} favorites
+ * ステートをストレージに保存する
+ * @param {Array} state
  * @returns {Promise}
  */
-export const setFavorites = (favorites) => {
+export const setState = (state) => {
     return setLocalStorage({
-        favorites: favorites
+        state: state
     });
 };
 
-
-// console
 /**
- * ストレージからお気に入りを読み込む
+ * ストレージからスレートを読み込む
  * @returns {Promise}
  */
-export const getFavorites = () => {
-    return getLocalStorage('favorites');
-};
-
-
-/**
- * ストレージから選択中のバージョンを読み込む
- * @returns {Promise}
- */
-export const getSelectedVersion = () => {
-    return getLocalStorage('current');
+export const getState = () => {
+    return getLocalStorage('state');
 };
 
 
@@ -145,7 +134,7 @@ export const moveTabs = (tabIds, moveProperties) => {
  */
 export const removeTabs = (tabIds) => {
     return new Promise((resolve, reject) => {
-        chrome.tabs.move(tabIds, () => {
+        chrome.tabs.remove(tabIds, () => {
             const err = chrome.runtime.lastError;
             if (err) {
                 logException(err);
@@ -174,72 +163,18 @@ export const updateTab = (tabId, updateProperties) => {
     });
 };
 
-
-// item.js
 /**
  * 指定したタブを現在のタブの右に移動する
  * @param tabIds
  */
 export const moveTabs2Right = async (tabIds) => {
     const tab = await getCurrentTab();
-    await moveTabs(tabIds, {
+    const openTab = await moveTabs(tabIds, {
         windowId: chrome.windows.WINDOW_ID_CURRENT,
         index: tab.index + 1
     });
-    await updateTab(tab.id, { selected: true });
-    // chrome.tabs.query(
-    //     {active: true, windowId: windowId},
-    //     tabs => {
-    //         let tab = tabs[0];
-    //         let moveProperties = {windowId: windowId, index: tab.index + 1};
-    //         chrome.tabs.move(tagId, moveProperties, tab => {
-    //             let err = chrome.runtime.lastError;
-    //             if (err) {
-    //                 this.setState({
-    //                     err: err.message,
-    //                 });
-    //                 return;
-    //             }
-    //             chrome.tabs.update(tab.id, {selected: true}, tab => {
-    //                 this.setState({
-    //                     err: false,
-    //                 });
-    //             });
-    //         });
-    //     }
-    // );
+    await updateTab(openTab.id, { selected: true });
 };
-
-// root.js
-// export const jjj1 = () => {
-//     chrome.tabs.query(
-//         {active: true, windowId: chrome.windows.WINDOW_ID_CURRENT},
-//         tabs => {
-//             let tab = tabs[0];
-//             let active = url.check(tab.url) ? true : false;
-//             this.setState({
-//                 url: tab.url,
-//                 isActive: active,
-//                 tabIndex: tab.index,
-//             });
-//             FavoriteActions.updated();
-//         }
-//     );
-// };
-
-
-// tabs
-// export const rrr1 = () => {
-//     chrome.tabs.query(
-//         {active: true, windowId: chrome.windows.WINDOW_ID_CURRENT},
-//         tabs => {
-//             let tab = tabs[0];
-//             this.setState({
-//                 currentId: tab.id,
-//             });
-//         }
-//     );
-// };
 
 /**
  * 開いているすべてのタブのドキュメント記事を返す

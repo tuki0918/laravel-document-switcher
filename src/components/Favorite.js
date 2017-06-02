@@ -15,7 +15,7 @@ class Favorite extends Component {
         })).isRequired,
     };
 
-    feeds() {
+    items = () => {
         const { favorites } = this.props;
         if (favorites.length) {
             return favorites.map((tab, idx) => {
@@ -39,10 +39,10 @@ class Favorite extends Component {
                 </li>
             );
         }
-    }
+    };
 
     render() {
-        const items = this.feeds();
+        const items = this.items();
         return (
             <div className="favorite">
                 <ul className="list-group">

@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { favorite_remove } from './../actions/ActionCreator';
-import { Type, NOIMAGE_PATH } from './../constants';
+import { Type } from './../constants';
 import { openTab, moveTabs2Right, removeTabs } from './../lib/chrome';
+import noImage from './../images/noimage.png';
 
 class Item extends Component {
 
@@ -23,8 +24,10 @@ class Item extends Component {
 
         const { id, currentId } = this.props;
         this.state = {
-            isActived: (id === currentId),
-            isDeleted: false,
+            // アクティブ状態フラグ（開いているドキュメントのみ対応）
+            isActive: (id === currentId),
+            // 削除処理フラグ
+            isDelete: false,
         }
     }
 
@@ -40,12 +43,6 @@ class Item extends Component {
         if (id) {
             moveTabs2Right(id);
         }
-
-
-        // TODO: err, catch
-        // this.setState({
-        //     //           err: err.message,
-        //     //         });
     };
 
     onCloseFeed = () => {
@@ -53,28 +50,24 @@ class Item extends Component {
         if (id) {
             removeTabs(id);
             this.setState({
-                deleted: true,
+                isDelete: true,
             });
         }
     };
 
     onDeleteFeed = () => {
-        const { currentTabUrl, removeFavorite } = this.props;
-        removeFavorite(currentTabUrl);
+        const { url, removeFavorite } = this.props;
+        removeFavorite(url);
     };
 
     render() {
         const { url, title, favIconUrl, type } = this.props;
-        const { isActived, isDeleted } = this.state;
-        const image = favIconUrl ? favIconUrl : NOIMAGE_PATH;
-        const listActiveClass = (isActived) ? 'active' : '';
-        const listHiddenClass = (isDeleted) ? 'hidden' : '';
+        const { isActive, isDelete } = this.state;
+        const image = favIconUrl ? favIconUrl : noImage;
+        const listActiveClass = (isActive) ? 'active' : '';
+        const listHiddenClass = (isDelete) ? 'hidden' : '';
         const isFeedList = (type === Type.Tab);
 
-        // TODO: err
-        // let error = (!this.state.err) ? '' : (
-        //     <p className="alert alert-warning">{this.state.err}</p>
-        // );
         return (
             <li className={'list-group-item ' + listActiveClass + ' ' + listHiddenClass}>
                 <span className="icon icon-cancel-circled pull-right close"
@@ -84,7 +77,7 @@ class Item extends Component {
                          src={image} alt="thumbnail" width="32" height="32" />
                     <div className="media-body">
                         <strong>{title}</strong>
-                        <p>{url}</p>
+                        <p className="url">{url}</p>
                     </div>
                 </div>
             </li>

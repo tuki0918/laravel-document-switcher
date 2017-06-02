@@ -47,6 +47,10 @@ li.list-group-item.hidden {
   display: none;
 }
 
+li.list-group-item p.url {
+  color: darkgray;
+}
+
 li.list-group-item .close {
   display: none;
   padding: 0 8px;

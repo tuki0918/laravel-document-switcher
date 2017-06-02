@@ -16,7 +16,7 @@ const FLAG = {
  */
 const REGEX = {
     JPN_DOC_URL: /^https?:\/\/readouble\.com\/laravel\/.+\/(ja|en)\/.*$/,
-    ENG_DOC_URL: /^https?:\/\/laravel\.com\/flags\/.*$/,
+    ENG_DOC_URL: /^https?:\/\/laravel\.com\/docs\/.*$/,
 };
 
 const KEY_VERSION = '##VERSION##';

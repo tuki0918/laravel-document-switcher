@@ -1,48 +1,49 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class Navigation extends React.Component {
+class Navigation extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            selectIndex: 0,
+            selected: 0,
         };
     }
 
-    onChange = (idx) => {
-        console.log('===Navigation===', idx, '<<< onChange');
-        // this.setState({
-        //     selectIndex: idx
-        // });
+    onSwitch = (e) => {
+        const idx = e.currentTarget.getAttribute('data-idx');
+        this.setState({
+            selected: parseInt(idx, 10),
+        });
     };
 
     data = () => {
         return [
             {
-                link: '/tabs',
-                name: '開いてるドキュメント'
+                path: '/tabs',
+                name: '現在、開いてるドキュメント'
             },
             {
-                link: '/favorite',
-                name: 'お気に入り'
+                path: '/favorite',
+                name: 'ブックマーク'
             },
         ];
     };
 
     render() {
-        const { selectIndex } = this.state;
-
+        const { selected } = this.state;
         const data = this.data();
         return (
             <div className="tab-group">
                 {
                     data.map(function(nav, idx) {
-                        const isActive = (idx === selectIndex) ? 'active' : '';
+                        const isActive = (idx === selected) ? 'active' : '';
                         return (
                             <div className={'tab-item ' + isActive} key={'nav-' + idx}>
-                                <Link to={nav.link} onClick={this.onChange(idx)}>{nav.name}</Link>
+                                <Link to={nav.path} onClick={this.onSwitch} data-idx={idx}>
+                                    {nav.name}
+                                </Link>
                             </div>
                         );
                     }, this)

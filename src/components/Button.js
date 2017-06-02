@@ -11,10 +11,14 @@ class Button extends Component {
         current: PropTypes.string.isRequired,
     };
 
+    isActive = () => {
+        const { value, current } = this.props;
+        return (value === current);
+    };
+
     render() {
-        const { name, value, current } = this.props;
-        const { onChange } = this.props;
-        const btnClass = (value === current) ? 'active' : '';
+        const { name, value, onChange } = this.props;
+        const btnClass = this.isActive() ? 'active' : '';
         return (
             <button className={'btn btn-default ' + btnClass}
                     value={value}

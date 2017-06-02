@@ -3,12 +3,17 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Item from './Item';
 import { Type } from './../constants';
-import { getTabs } from './../lib/chrome';
+import { getOpenTabFeeds } from './../lib/chrome';
 
 class Tabs extends Component {
 
     static propTypes = {
-        currentTabId: PropTypes.number.isRequired,
+        tab: PropTypes.arrayOf(PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            url: PropTypes.string.isRequired,
+            title: PropTypes.string.isRequired,
+            favIconUrl: PropTypes.string.isRequired,
+        })).isRequired,
     };
 
     constructor(props) {
@@ -23,16 +28,15 @@ class Tabs extends Component {
         this.getTabList();
     }
 
-    getTabList = () => {
-        const tabs = getTabs();
-        console.log('===TAB===', tabs, '<<< getTabList');
+    getTabList = async () => {
+        const tabs = await getOpenTabFeeds();
         this.setState({
             tabs: tabs,
         });
     };
 
-    feeds = () => {
-        const { currentTabId } = this.props;
+    items = () => {
+        const currentTab = this.props.tab;
         const { tabs } = this.state;
         if (tabs.length) {
             return tabs.map((tab, idx) => {
@@ -42,7 +46,7 @@ class Tabs extends Component {
                           url={tab.url}
                           title={tab.title}
                           favIconUrl={tab.favIconUrl}
-                          currentId={currentTabId}
+                          currentId={currentTab.id}
                           type={Type.Tab}
                     />
                 );
@@ -59,7 +63,7 @@ class Tabs extends Component {
     };
 
     render() {
-        const items = this.feeds();
+        const items = this.items();
         return (
             <div className="tabs">
                 <ul className="list-group">
@@ -72,7 +76,7 @@ class Tabs extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        currentTabId: state.setting.currentTabId,
+        tab: state.tab
     };
 };
 

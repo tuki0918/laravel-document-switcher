@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { data_setup, favorite_add, favorite_remove } from './../actions/ActionCreator';
+import { favorite_add, favorite_remove } from './../actions/ActionCreator';
 import { checkURL, convertToURL } from './../lib/link';
 import { openTab2Right } from './../lib/chrome';
 import Button from './Button';
@@ -10,12 +10,20 @@ class Control extends Component {
 
     static propTypes = {
         current: PropTypes.string.isRequired,
-        isFavorite: PropTypes.bool.isRequired,
-        currentTabId: PropTypes.number.isRequired,
-        currentTabUrl: PropTypes.string.isRequired,
         versions: PropTypes.arrayOf(PropTypes.shape({
             name: PropTypes.string.isRequired,
             value: PropTypes.string.isRequired,
+        })).isRequired,
+
+        favorites: PropTypes.arrayOf(PropTypes.shape({
+            url: PropTypes.string.isRequired,
+        })).isRequired,
+
+        tab: PropTypes.arrayOf(PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            url: PropTypes.string.isRequired,
+            title: PropTypes.string.isRequired,
+            favIconUrl: PropTypes.string.isRequired,
         })).isRequired,
 
         setup: PropTypes.func.isRequired,
@@ -23,41 +31,40 @@ class Control extends Component {
         removeFavorite: PropTypes.func.isRequired,
     };
 
-    constructor(props) {
-        super(props);
-
-        const { currentTabUrl } = this.props;
-        this.state = {
-            isActive: (checkURL(currentTabUrl) > 0)
-        }
-    }
-
-    componentDidMount() {
-        this.props.setup();
-    }
-
     onToggleFavorite = () => {
-        const { isFavorite, currentTabUrl } = this.props;
-        const { addFavorite, removeFavorite } = this.props;
-        if (isFavorite) {
-            addFavorite();
+        const { tab, addFavorite, removeFavorite } = this.props;
+        if (!this.isFavorite()) {
+            addFavorite(tab);
         } else {
-            removeFavorite(currentTabUrl);
+            removeFavorite(tab.url);
         }
     };
 
     onOpenDocument = () => {
-        const { current, currentTabId, currentTabUrl } = this.props;
-        if (this.state.isActive) {
-            const newURL = convertToURL(currentTabUrl, current);
-            openTab2Right(newURL, currentTabId);
+        if (this.isActive()) {
+            const { tab, current } = this.props;
+            const newURL = convertToURL(tab.url, current);
+            openTab2Right(newURL, tab.id);
         }
     };
 
+    isActive = () => {
+        const { tab } = this.props;
+        return (checkURL(tab.url) > 0);
+    };
+
+    isFavorite = () => {
+        const { favorites, tab } = this.props;
+        const items = favorites.filter(function(favorite, idx) {
+            return (favorite.url === tab.url);
+        });
+        return (items.length > 0);
+    };
+
     render() {
-        const { current, versions, isFavorite } = this.props;
-        const btnClass = (this.state.isActive) ? 'active' : '';
-        const iconClass = (isFavorite) ? 'icon-star' : 'icon-star-empty';
+        const { current, versions } = this.props;
+        const btnClass = this.isActive() ? '' : 'hidden';
+        const iconClass = this.isFavorite() ? 'icon-star' : 'icon-star-empty';
         return (
             <header className="toolbar toolbar-header">
                 <div className="toolbar-actions">
@@ -75,7 +82,7 @@ class Control extends Component {
 
                     <button className={'btn btn-default ' + btnClass} onClick={this.onOpenDocument}>
                         <span className="icon icon-book-open icon-text" />
-                        日本語ドキュメントへ
+                        日本語ドキュメントを開く
                     </button>
 
                     <button className="btn btn-default pull-right" onClick={this.onToggleFavorite}>
@@ -90,20 +97,17 @@ class Control extends Component {
 
 
 const mapStateToProps = (state) => {
-    console.log('===Console===', state, '<<< redux');
     return {
         current: state.setting.current,
-        isFavorite: state.isFavorite || false,
-        currentTabId: state.setting.currentTabId || 0,
-        currentTabUrl: state.setting.currentTabUrl || '',
-        versions: state.setting.versions,
+        versions: state.versions,
+        favorites: state.favorites,
+        tab: state.tab,
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        setup: () => dispatch(data_setup()),
-        addFavorite: () => dispatch(favorite_add()),
+        addFavorite: (favorite) => dispatch(favorite_add(favorite)),
         removeFavorite: (url) => dispatch(favorite_remove(url)),
     };
 };
