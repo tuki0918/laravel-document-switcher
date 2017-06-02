@@ -1,15 +1,11 @@
-/* eslint-env browser */
-
 import Raven from 'raven-js';
 import React from 'react';
 import { render } from 'react-dom';
+import { createReduxStore } from './store';
 import App from './App';
 import { SENTRY_DSN } from './constants';
-import { createStore, applyMiddleware, compose } from 'redux';
-import { getCurrentTab, getState, setState } from './lib/chrome';
 import { init_setup } from './actions/ActionCreator';
-import reducer from './reducer';
-import promiseMiddleware from 'redux-promise';
+import { getCurrentTab, getState, setState } from './lib/chrome';
 import 'photon/dist/css/photon.css'
 import './App.css';
 
@@ -18,39 +14,21 @@ import './App.css';
  */
 Raven.config(SENTRY_DSN).install();
 
-
-/**
- * Middleware
- */
-const useDevTools =
-    process.env.NODE_ENV !== 'production' &&
-    window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
-
-const composeEnhancers = useDevTools
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    : compose;
-
-const middlewareEnhancer = applyMiddleware(promiseMiddleware);
-
 /**
  * Store & render
  */
 (async () => {
-    // 初期ステート
+    // 初期ステート & 初期データ
     const preLoadedState = await getState() || {};
-
-    // compose関数：複数の関数を結合する
-    const store = createStore(
-        reducer,
-        preLoadedState,
-        composeEnhancers(middlewareEnhancer)
-    );
-
-    // 初期データ
     const tab = await getCurrentTab();
+
+    // ストアの作成
+    const store = createReduxStore(preLoadedState);
+
+    // セットアップ処理
     store.dispatch(init_setup(tab));
 
-    // ステートが変更されるたびに実行
+    // ステートが変更された時の処理
     store.subscribe(async () => {
         const state = store.getState();
         // 現在ステートの一部を永続化する
