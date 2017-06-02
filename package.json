@@ -22,7 +22,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "zip": "zip -j - build/* > build/extension.zip",
+    "zip": "zip extension.zip -r build/*",
     "clean": "rm -rf build"
   }
 }

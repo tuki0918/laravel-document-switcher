@@ -3,7 +3,7 @@ import { change_version } from './../actions/ActionCreator';
 
 const initialSettingState = {
     /* 選択中のドキュメントバージョン */
-    current: '5/4',
+    current: '5.4',
 };
 
 export const setting = handleActions({
