@@ -31,6 +31,9 @@ class Item extends Component {
         }
     }
 
+    /**
+     * 記事を新しいタブで開く
+     */
     onOpenFeed = () => {
         const { url } = this.props;
         if (url) {
@@ -38,6 +41,9 @@ class Item extends Component {
         }
     };
 
+    /**
+     * 開いているタブを現在のタブの右に移動してアクティブにする
+     */
     onMoveFeed = () => {
         const { id } = this.props;
         if (id) {
@@ -45,6 +51,9 @@ class Item extends Component {
         }
     };
 
+    /**
+     * 記事をブラウザから閉じる
+     */
     onCloseFeed = () => {
         const { id } = this.props;
         if (id) {
@@ -55,6 +64,9 @@ class Item extends Component {
         }
     };
 
+    /**
+     * 記事をお気に入りから削除する
+     */
     onDeleteFeed = () => {
         const { url, removeFavorite } = this.props;
         removeFavorite(url);

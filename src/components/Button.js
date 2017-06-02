@@ -11,6 +11,10 @@ class Button extends Component {
         current: PropTypes.string.isRequired,
     };
 
+    /**
+     * 選択中のボタンかどうか
+     * @returns {boolean}
+     */
     isActive = () => {
         const { value, current } = this.props;
         return (value === current);

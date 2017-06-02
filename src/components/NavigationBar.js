@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class Navigation extends Component {
+class NavigationBar extends Component {
 
     constructor(props) {
         super(props);
@@ -11,6 +11,10 @@ class Navigation extends Component {
         };
     }
 
+    /**
+     * ナビゲーションの切り替え
+     * @param e
+     */
     onSwitch = (e) => {
         const idx = e.currentTarget.getAttribute('data-idx');
         this.setState({
@@ -18,6 +22,10 @@ class Navigation extends Component {
         });
     };
 
+    /**
+     * タブ情報
+     * @returns {[*,*]}
+     */
     data = () => {
         return [
             {
@@ -53,4 +61,4 @@ class Navigation extends Component {
     }
 }
 
-export default Navigation;
+export default NavigationBar;

@@ -28,6 +28,10 @@ class Tabs extends Component {
         this.getTabList();
     }
 
+    /**
+     * 開いているドキュメント一覧を取得する
+     * @returns {Promise.<void>}
+     */
     getTabList = async () => {
         const tabs = await getOpenTabFeeds();
         this.setState({
@@ -35,6 +39,10 @@ class Tabs extends Component {
         });
     };
 
+    /**
+     * 開いているドキュメント一覧のHTMLを生成
+     * @returns {*}
+     */
     items = () => {
         const currentTab = this.props.tab;
         const { tabs } = this.state;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Control from './Control';
-import Navigation from './Navigation';
+import ControlBar from './ControlBar';
+import NavigationBar from './NavigationBar';
 
 class Home extends Component {
 
@@ -8,9 +8,9 @@ class Home extends Component {
         return (
             <div className="window">
 
-                <Control />
+                <ControlBar />
 
-                <Navigation />
+                <NavigationBar />
 
                 <div className="window-content">
                     <div className="pane-group">

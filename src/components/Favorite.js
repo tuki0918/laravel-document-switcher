@@ -15,6 +15,10 @@ class Favorite extends Component {
         })).isRequired,
     };
 
+    /**
+     * お気に入り一覧のHTMLを生成
+     * @returns {XML}
+     */
     items = () => {
         const { favorites } = this.props;
         if (favorites.length) {

@@ -6,7 +6,7 @@ import { checkURL, convertToURL } from './../lib/link';
 import { openTab2Right } from './../lib/chrome';
 import Button from './Button';
 
-class Control extends Component {
+class ControlBar extends Component {
 
     static propTypes = {
         current: PropTypes.string.isRequired,
@@ -31,6 +31,9 @@ class Control extends Component {
         removeFavorite: PropTypes.func.isRequired,
     };
 
+    /**
+     * お気に入りに登録・解除
+     */
     onToggleFavorite = () => {
         const { tab, addFavorite, removeFavorite } = this.props;
         if (!this.isFavorite()) {
@@ -40,6 +43,9 @@ class Control extends Component {
         }
     };
 
+    /**
+     * 新しいタブでドキュメントを開く
+     */
     onOpenDocument = () => {
         if (this.isActive()) {
             const { tab, current } = this.props;
@@ -48,11 +54,19 @@ class Control extends Component {
         }
     };
 
+    /**
+     * このページはドキュメントかどうか
+     * @returns {boolean}
+     */
     isActive = () => {
         const { tab } = this.props;
         return (checkURL(tab.url) > 0);
     };
 
+    /**
+     * このページはお気に入りしているかどうか
+     * @returns {boolean}
+     */
     isFavorite = () => {
         const { favorites, tab } = this.props;
         const items = favorites.filter(function(favorite, idx) {
@@ -112,4 +126,4 @@ const mapDispatchToProps = (dispatch) => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Control);
+export default connect(mapStateToProps, mapDispatchToProps)(ControlBar);

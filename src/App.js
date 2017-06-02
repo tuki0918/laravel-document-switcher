@@ -8,9 +8,8 @@ import Favorite from './components/Favorite';
 export default class App extends Component {
 
     render() {
-        const { store } = this.props;
         return (
-            <Provider store={store}>
+            <Provider store={this.props.store}>
                 <Router>
                     <Home>
                         <Route path='/tabs' component={Tabs} />

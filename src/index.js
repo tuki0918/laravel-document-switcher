@@ -20,7 +20,7 @@ Raven.config(SENTRY_DSN).install();
 
 
 /**
- *
+ * Middleware
  */
 const useDevTools =
     process.env.NODE_ENV !== 'production' &&
@@ -33,10 +33,9 @@ const composeEnhancers = useDevTools
 const middlewareEnhancer = applyMiddleware(promiseMiddleware);
 
 /**
- *
+ * Store & render
  */
 (async () => {
-    // TODO: storeのモジュール化
     // 初期ステート
     const preLoadedState = await getState() || {};
 
@@ -51,9 +50,6 @@ const middlewareEnhancer = applyMiddleware(promiseMiddleware);
     const tab = await getCurrentTab();
     store.dispatch(init_setup(tab));
 
-    // 初期ステートのログ
-    console.error(store.getState());
-
     // ステートが変更されるたびに実行
     store.subscribe(async () => {
         const state = store.getState();
@@ -62,7 +58,6 @@ const middlewareEnhancer = applyMiddleware(promiseMiddleware);
             setting: state.setting,
             favorites: state.favorites,
         });
-        console.warn(store.getState());
     });
 
     // 描画
