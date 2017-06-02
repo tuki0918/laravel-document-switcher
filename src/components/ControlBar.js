@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import Button from './Button';
 import { favorite_add, favorite_remove } from './../actions/ActionCreator';
 import { checkURL, convertToURL } from './../lib/link';
 import { openTab2Right } from './../lib/chrome';
-import Button from './Button';
 
 class ControlBar extends Component {
 
