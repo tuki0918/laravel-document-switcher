@@ -1,6 +1,8 @@
 import { handleActions } from 'redux-actions';
 import { favorite_add, favorite_remove } from './../actions/ActionCreator';
 
+export const initialState = [];
+
 export const favorites = handleActions({
     /* お気に入りを末尾に追加 */
     [favorite_add]: (state, action) =>
@@ -13,4 +15,4 @@ export const favorites = handleActions({
             return (favorite.url !== action.payload);
         })
     ,
-}, []);
+}, initialState);

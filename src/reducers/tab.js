@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions';
 import { init_setup } from './../actions/ActionCreator';
 
-const initialSettingState = {
+export const initialState = {
     /* ブラウザタブのID */
     id: 0,
 
@@ -11,5 +11,7 @@ const initialSettingState = {
 
 export const tab = handleActions({
     /* 初期設定 */
-    [init_setup]: (state, action) => Object.assign({}, state, action.payload),
-}, initialSettingState);
+    [init_setup]: (state, action) =>
+        Object.assign({}, state, action.payload)
+    ,
+}, initialState);
