@@ -63,7 +63,7 @@ class Tabs extends Component {
             return (
                 <li className="list-group-item">
                     <div className="media-body">
-                        <p>現在、開いているドキュメントが表示されます。</p>
+                        <p>開いているドキュメントが表示されます。</p>
                     </div>
                 </li>
             );
