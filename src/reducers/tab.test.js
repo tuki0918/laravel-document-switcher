@@ -1,11 +1,10 @@
 import { tab as reducer, initialState } from './tab';
-import { not_exist_action, init_setup } from './../actions/ActionCreator';
+import { init_setup } from './../actions/ActionCreator';
 
 describe('reducer: tab', () => {
 
     it('initial state', () => {
-        // TODO: how to check `initialState`
-        const next = reducer(initialState, not_exist_action);
+        const next = reducer(undefined, {});
         expect(next).toBe(initialState);
     });
 
@@ -14,7 +13,7 @@ describe('reducer: tab', () => {
             id: 10,
             favIconUrl: 'http://example.com/icon.png',
         };
-        const next = reducer(initialState, init_setup(data));
+        const next = reducer(undefined, init_setup(data));
         const expected = Object.assign({}, initialState, data);
         expect(next).toEqual(expected);
     });

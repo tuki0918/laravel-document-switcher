@@ -1,11 +1,10 @@
 import { favorites as reducer, initialState } from './favorites';
-import { not_exist_action, favorite_add, favorite_remove } from './../actions/ActionCreator';
+import { favorite_add, favorite_remove } from './../actions/ActionCreator';
 
 describe('reducer: favorites', () => {
 
     it('initial state', () => {
-        // TODO: how to check `initialState`
-        const next = reducer(initialState, not_exist_action);
+        const next = reducer(undefined, {});
         expect(next).toBe(initialState);
     });
 
@@ -25,7 +24,7 @@ describe('reducer: favorites', () => {
             id: 1,
             favIconUrl: 'http://example.com/icon1.png',
         };
-        const next1 = reducer(initialState, favorite_add(data1));
+        const next1 = reducer(undefined, favorite_add(data1));
         const expected1 = [data1];
         expect(next1).toEqual(expected1);
 
@@ -41,7 +40,7 @@ describe('reducer: favorites', () => {
 
     it('action: favorite_remove 1', () => {
         const url = 'http://example.com/page1';
-        const next = reducer(initialState, favorite_remove(url));
+        const next = reducer(undefined, favorite_remove(url));
         const expected = [];
         expect(next).toEqual(expected);
     });

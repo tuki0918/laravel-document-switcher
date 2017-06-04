@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Item from './Item';
 import { Type } from './../constants';
-import { getOpenTabFeeds } from './../lib/chrome';
+import { getOpenTabList } from './../lib/chrome';
 
 class Tabs extends Component {
 
@@ -33,7 +33,7 @@ class Tabs extends Component {
      * @returns {Promise.<void>}
      */
     getTabList = async () => {
-        const tabs = await getOpenTabFeeds();
+        const tabs = await getOpenTabList();
         this.setState({
             tabs: tabs,
         });

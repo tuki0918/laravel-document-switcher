@@ -1,11 +1,10 @@
 import { setting as reducer, initialState } from './setting';
-import { not_exist_action, change_version } from './../actions/ActionCreator';
+import { change_version } from './../actions/ActionCreator';
 
 describe('reducer: setting', () => {
 
     it('initial state', () => {
-        // TODO: how to check `initialState`
-        const next = reducer(initialState, not_exist_action);
+        const next = reducer(undefined, {});
         expect(next).toBe(initialState);
     });
 
@@ -14,7 +13,7 @@ describe('reducer: setting', () => {
         const data = {
             current: current,
         };
-        const next = reducer(initialState, change_version(current));
+        const next = reducer(undefined, change_version(current));
         const expected = Object.assign({}, initialState, data);
         expect(next).toEqual(expected);
     });

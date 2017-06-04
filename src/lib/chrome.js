@@ -180,21 +180,9 @@ export const moveTabs2Right = async (tabIds) => {
  * 開いているすべてのタブのドキュメント記事を返す
  * @returns {Array}
  */
-export const getOpenTabFeeds = async () => {
+export const getOpenTabList = async () => {
     const tabs = await getTabs();
-    let feeds = [];
-    tabs.map(tab => {
-        if (!checkURL(tab.url)) {
-            return false;
-        }
-        feeds.push({
-            id: tab.id,
-            url: tab.url,
-            title: tab.title,
-            favIconUrl: tab.favIconUrl,
-        });
-        return true;
+    return tabs.filter(function(tab, idx) {
+        return checkURL(tab.url);
     });
-    feeds.reverse();
-    return feeds;
 };
