@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Item from './Item';
 import { Type } from './../constants';
 
-class Favorite extends Component {
+export class Favorite extends Component {
 
     static propTypes = {
         favorites: PropTypes.arrayOf(PropTypes.shape({

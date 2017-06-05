@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { change_version } from './../actions/ActionCreator';
 
-class Button extends Component {
+export class Button extends Component {
 
     static propTypes = {
         name: PropTypes.string.isRequired,

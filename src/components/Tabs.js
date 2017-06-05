@@ -5,7 +5,7 @@ import Item from './Item';
 import { Type } from './../constants';
 import { getOpenTabList } from './../lib/chrome';
 
-class Tabs extends Component {
+export class Tabs extends Component {
 
     static propTypes = {
         tab: PropTypes.arrayOf(PropTypes.shape({
