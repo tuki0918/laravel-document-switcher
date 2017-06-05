@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { change_version } from './../actions/ActionCreator';
 
-class Button extends Component {
+export class Button extends Component {
 
     static propTypes = {
         name: PropTypes.string.isRequired,
         value: PropTypes.string.isRequired,
         current: PropTypes.string.isRequired,
+
+        onChange: PropTypes.func.isRequired,
     };
 
     /**
@@ -20,13 +22,22 @@ class Button extends Component {
         return (value === current);
     };
 
+    /**
+     * 変更通知を投げる
+     * @param e
+     */
+    onClick = (e) => {
+        const version = e.target.value;
+        this.props.onChange(version);
+    };
+
     render() {
-        const { name, value, onChange } = this.props;
+        const { name, value } = this.props;
         const btnClass = this.isActive() ? 'active' : '';
         return (
             <button className={'btn btn-default ' + btnClass}
                     value={value}
-                    onClick={onChange}>
+                    onClick={this.onClick}>
                 {name}
             </button>
         );
@@ -39,7 +50,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onChange: (e) => dispatch(change_version(e.target.value)),
+        onChange: (version) => dispatch(change_version(version)),
     };
 };
 

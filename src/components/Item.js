@@ -6,7 +6,7 @@ import { Type } from './../constants';
 import { openTab, moveTabs2Right, removeTabs } from './../lib/chrome';
 import noImage from './../images/noimage.png';
 
-class Item extends Component {
+export class Item extends Component {
 
     static propTypes = {
         id: PropTypes.number.isRequired,

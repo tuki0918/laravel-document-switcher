@@ -6,7 +6,7 @@ import { favorite_add, favorite_remove } from './../actions/ActionCreator';
 import { checkURL, convertToURL } from './../lib/link';
 import { openTab2Right } from './../lib/chrome';
 
-class ControlBar extends Component {
+export class ControlBar extends Component {
 
     static propTypes = {
         current: PropTypes.string.isRequired,

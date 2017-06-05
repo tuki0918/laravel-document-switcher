@@ -5,7 +5,7 @@ import Item from './Item';
 import { Type } from './../constants';
 import { getOpenTabList } from './../lib/chrome';
 
-class Tabs extends Component {
+export class Tabs extends Component {
 
     static propTypes = {
         tab: PropTypes.arrayOf(PropTypes.shape({
@@ -41,33 +41,37 @@ class Tabs extends Component {
 
     /**
      * 開いているドキュメント一覧のHTMLを生成
-     * @returns {*}
+     * @returns {Array}
      */
     items = () => {
         const currentTab = this.props.tab;
         const { tabs } = this.state;
-        if (tabs.length) {
-            return tabs.map((tab, idx) => {
-                return (
-                    <Item key={'tab-' + idx}
-                          id={tab.id}
-                          url={tab.url}
-                          title={tab.title}
-                          favIconUrl={tab.favIconUrl}
-                          currentId={currentTab.id}
-                          type={Type.Tab}
-                    />
-                );
-            });
-        } else {
+        return tabs.map((tab, idx) => {
             return (
-                <li className="list-group-item">
-                    <div className="media-body">
-                        <p>開いているドキュメントが表示されます。</p>
-                    </div>
-                </li>
+                <Item key={'tab-' + idx}
+                      id={tab.id}
+                      url={tab.url}
+                      title={tab.title}
+                      favIconUrl={tab.favIconUrl}
+                      currentId={currentTab.id}
+                      type={Type.Tab}
+                />
             );
-        }
+        });
+    };
+
+    /**
+     * データが見つからない場合
+     * @returns {XML}
+     */
+    notFound = () => {
+        return (
+            <li className="list-group-item">
+                <div className="media-body">
+                    <p className="not-found">開いているドキュメントが表示されます。</p>
+                </div>
+            </li>
+        );
     };
 
     render() {
@@ -75,7 +79,7 @@ class Tabs extends Component {
         return (
             <div className="tabs">
                 <ul className="list-group">
-                    {items}
+                    {items.length ? items : this.notFound()}
                 </ul>
             </div>
         );

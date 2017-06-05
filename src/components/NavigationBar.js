@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-class NavigationBar extends Component {
+export class NavigationBar extends Component {
 
     constructor(props) {
         super(props);
@@ -39,23 +39,30 @@ class NavigationBar extends Component {
         ];
     };
 
-    render() {
+    /**
+     * 一覧のHTMLを生成
+     * @returns {Array}
+     */
+    items = () => {
         const { selected } = this.state;
         const data = this.data();
+        return data.map(function(nav, idx) {
+            const isActive = (idx === selected) ? 'active' : '';
+            return (
+                <div className={'tab-item ' + isActive} key={'nav-' + idx}>
+                    <Link to={nav.path} onClick={this.onSwitch} data-idx={idx}>
+                        {nav.name}
+                    </Link>
+                </div>
+            );
+        }, this)
+    };
+
+    render() {
+        const items = this.items();
         return (
             <div className="tab-group">
-                {
-                    data.map(function(nav, idx) {
-                        const isActive = (idx === selected) ? 'active' : '';
-                        return (
-                            <div className={'tab-item ' + isActive} key={'nav-' + idx}>
-                                <Link to={nav.path} onClick={this.onSwitch} data-idx={idx}>
-                                    {nav.name}
-                                </Link>
-                            </div>
-                        );
-                    }, this)
-                }
+                {items}
             </div>
         );
     }
