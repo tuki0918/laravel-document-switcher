@@ -21,28 +21,32 @@ export class Favorite extends Component {
      */
     items = () => {
         const { favorites } = this.props;
-        if (favorites.length) {
-            return favorites.map((tab, idx) => {
-                return (
-                    <Item key={'tab-' + idx}
-                          id={tab.id}
-                          url={tab.url}
-                          title={tab.title}
-                          favIconUrl={tab.favIconUrl}
-                          currentId={false}
-                          type={Type.Favorite}
-                    />
-                );
-            });
-        } else {
+        return favorites.map((tab, idx) => {
             return (
-                <li className="list-group-item">
-                    <div className="media-body">
-                        <p>お気に入りに登録することで一覧に表示されます。</p>
-                    </div>
-                </li>
+                <Item key={'tab-' + idx}
+                      id={tab.id}
+                      url={tab.url}
+                      title={tab.title}
+                      favIconUrl={tab.favIconUrl}
+                      currentId={false}
+                      type={Type.Favorite}
+                />
             );
-        }
+        });
+    };
+
+    /**
+     * データが見つからない場合
+     * @returns {XML}
+     */
+    notFound = () => {
+        return (
+            <li className="list-group-item">
+                <div className="media-body">
+                    <p className="not-found">お気に入りに登録することで一覧に表示されます。</p>
+                </div>
+            </li>
+        );
     };
 
     render() {
@@ -50,7 +54,7 @@ export class Favorite extends Component {
         return (
             <div className="favorite">
                 <ul className="list-group">
-                    {items}
+                    {items.length ? items : this.notFound()}
                 </ul>
             </div>
         );
