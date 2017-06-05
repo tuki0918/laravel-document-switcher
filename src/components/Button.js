@@ -9,6 +9,8 @@ export class Button extends Component {
         name: PropTypes.string.isRequired,
         value: PropTypes.string.isRequired,
         current: PropTypes.string.isRequired,
+
+        onChange: PropTypes.func.isRequired,
     };
 
     /**
@@ -20,13 +22,22 @@ export class Button extends Component {
         return (value === current);
     };
 
+    /**
+     * 変更通知を投げる
+     * @param e
+     */
+    onClick = (e) => {
+        const version = e.target.value;
+        this.props.onChange(version);
+    };
+
     render() {
-        const { name, value, onChange } = this.props;
+        const { name, value } = this.props;
         const btnClass = this.isActive() ? 'active' : '';
         return (
             <button className={'btn btn-default ' + btnClass}
                     value={value}
-                    onClick={onChange}>
+                    onClick={this.onClick}>
                 {name}
             </button>
         );
@@ -39,7 +50,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onChange: (e) => dispatch(change_version(e.target.value)),
+        onChange: (version) => dispatch(change_version(version)),
     };
 };
 
