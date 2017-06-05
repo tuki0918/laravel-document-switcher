@@ -17,7 +17,7 @@ export class Favorite extends Component {
 
     /**
      * お気に入り一覧のHTMLを生成
-     * @returns {XML}
+     * @returns {Array}
      */
     items = () => {
         const { favorites } = this.props;

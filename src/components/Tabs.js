@@ -41,7 +41,7 @@ export class Tabs extends Component {
 
     /**
      * 開いているドキュメント一覧のHTMLを生成
-     * @returns {*}
+     * @returns {Array}
      */
     items = () => {
         const currentTab = this.props.tab;
