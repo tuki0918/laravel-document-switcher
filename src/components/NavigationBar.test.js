@@ -3,7 +3,8 @@ import { shallow } from 'enzyme';
 import { NavigationBar } from './NavigationBar';
 
 describe('<NavigationBar />', () => {
-    it('default behavior', () => {
+
+    it('renders: default', () => {
         const wrap = shallow(<NavigationBar />);
 
         expect(wrap.instance().items()).toHaveLength(2);
@@ -19,4 +20,5 @@ describe('<NavigationBar />', () => {
         expect(wrap.find('.tab-item').at(0).prop('className').trim()).toBe('tab-item active');
         expect(wrap.find('.tab-item').at(1).prop('className').trim()).toBe('tab-item');
     });
+
 });

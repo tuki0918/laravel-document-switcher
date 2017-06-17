@@ -19,14 +19,13 @@ export class ControlBar extends Component {
             url: PropTypes.string.isRequired,
         })).isRequired,
 
-        tab: PropTypes.arrayOf(PropTypes.shape({
+        tab: PropTypes.shape({
             id: PropTypes.number.isRequired,
             url: PropTypes.string.isRequired,
             title: PropTypes.string.isRequired,
             favIconUrl: PropTypes.string.isRequired,
-        })).isRequired,
+        }).isRequired,
 
-        setup: PropTypes.func.isRequired,
         addFavorite: PropTypes.func.isRequired,
         removeFavorite: PropTypes.func.isRequired,
     };
@@ -75,23 +74,29 @@ export class ControlBar extends Component {
         return (items.length > 0);
     };
 
-    render() {
+    /**
+     * 一覧のHTMLを生成
+     */
+    items = () => {
         const { current, versions } = this.props;
+        return versions.map((version, idx) => {
+            return (
+                <Button key={'btn-' + idx}
+                        name={version.name} value={version.value} current={current}
+                />
+            );
+        })
+    };
+
+    render() {
         const btnClass = this.isActive() ? '' : 'hidden';
         const iconClass = this.isFavorite() ? 'icon-star' : 'icon-star-empty';
+        const items = this.items();
         return (
             <header className="toolbar toolbar-header">
                 <div className="toolbar-actions">
                     <div className="btn-group">
-                        {
-                            versions.map(function(version, idx) {
-                                return (
-                                    <Button key={'btn-' + idx}
-                                            name={version.name} value={version.value} current={current}
-                                    />
-                                );
-                            })
-                        }
+                        {items}
                     </div>
 
                     <button className={'btn btn-default ' + btnClass} onClick={this.onOpenDocument}>
