@@ -74,23 +74,29 @@ export class ControlBar extends Component {
         return (items.length > 0);
     };
 
-    render() {
+    /**
+     * 一覧のHTMLを生成
+     */
+    items = () => {
         const { current, versions } = this.props;
+        return versions.map((version, idx) => {
+            return (
+                <Button key={'btn-' + idx}
+                        name={version.name} value={version.value} current={current}
+                />
+            );
+        })
+    };
+
+    render() {
         const btnClass = this.isActive() ? '' : 'hidden';
         const iconClass = this.isFavorite() ? 'icon-star' : 'icon-star-empty';
+        const items = this.items();
         return (
             <header className="toolbar toolbar-header">
                 <div className="toolbar-actions">
                     <div className="btn-group">
-                        {
-                            versions.map(function(version, idx) {
-                                return (
-                                    <Button key={'btn-' + idx}
-                                            name={version.name} value={version.value} current={current}
-                                    />
-                                );
-                            })
-                        }
+                        {items}
                     </div>
 
                     <button className={'btn btn-default ' + btnClass} onClick={this.onOpenDocument}>
