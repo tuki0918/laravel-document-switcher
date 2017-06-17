@@ -5,8 +5,11 @@ import { Type } from './../constants';
 
 describe('<Item />', () => {
 
-    it('renders: default', () => {
-        const props = {
+    let props;
+    let wrap;
+
+    beforeEach(() => {
+        props = {
             id: 10,
             url: 'http://example.com/page10',
             title: 'Title - dummy',
@@ -15,8 +18,11 @@ describe('<Item />', () => {
             type: Type.Tab,
             removeFavorite: jest.fn(),
         };
-        const wrap = shallow(<Item {...props} />);
 
+        wrap = shallow(<Item {...props} />);
+    });
+
+    it('renders: default', () => {
         expect(wrap.find('.active').exists()).toBe(false);
         expect(wrap.find('.hidden').exists()).toBe(false);
 
@@ -36,16 +42,9 @@ describe('<Item />', () => {
     });
 
     it('renders: `.active`', () => {
-        const props = {
-            id: 10,
-            url: 'http://example.com/page10',
-            title: 'Title - dummy',
-            favIconUrl: 'http://example.com/icon.png',
+        wrap.setProps({
             currentId: 10,
-            type: Type.Tab,
-            removeFavorite: jest.fn(),
-        };
-        const wrap = shallow(<Item {...props} />);
+        });
 
         expect(wrap.find('.active').exists()).toBe(true);
         expect(wrap.find('.hidden').exists()).toBe(false);
@@ -56,16 +55,9 @@ describe('<Item />', () => {
     });
 
     it('renders: favorite feed', () => {
-        const props = {
-            id: 10,
-            url: 'http://example.com/page10',
-            title: 'Title - dummy',
-            favIconUrl: 'http://example.com/icon.png',
-            currentId: false,
+        wrap.setProps({
             type: Type.Favorite,
-            removeFavorite: jest.fn(),
-        };
-        const wrap = shallow(<Item {...props} />);
+        });
 
         expect(wrap.find('.active').exists()).toBe(false);
         expect(wrap.find('.hidden').exists()).toBe(false);

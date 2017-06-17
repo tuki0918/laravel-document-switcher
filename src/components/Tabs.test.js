@@ -4,25 +4,30 @@ import { Tabs } from './Tabs';
 
 describe('<Tabs />', () => {
 
-    it('renders: default', () => {
-        const item = {
-            id: 10,
-            url: 'http://example.com/page10',
-            title: 'Title - dummy',
-            favIconUrl: 'http://example.com/icon.png',
-        };
+    const item = {
+        id: 10,
+        url: 'http://example.com/page10',
+        title: 'Title - dummy',
+        favIconUrl: 'http://example.com/icon.png',
+    };
 
-        const props = {
+    let props;
+    let wrap;
+
+    beforeEach(() => {
+        props = {
             tab: item,
         };
 
-        const wrap = shallow(<Tabs {...props} />);
+        wrap = shallow(<Tabs {...props} />);
+    });
 
-        // 0 item
+    it('renders: default', () => {
         expect(wrap.instance().items()).toHaveLength(0);
         expect(wrap.find('.not-found').exists()).toBe(true);
+    });
 
-        // 1 item
+    it('renders: 1 items', () => {
         wrap.setState({
             tabs: [
                 item,
@@ -30,8 +35,9 @@ describe('<Tabs />', () => {
         });
         expect(wrap.instance().items()).toHaveLength(1);
         expect(wrap.find('.not-found').exists()).toBe(false);
+    });
 
-        // 3 item
+    it('renders: 3 items', () => {
         wrap.setState({
             tabs: [
                 item,

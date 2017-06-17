@@ -22,16 +22,29 @@ export class Item extends Component {
     constructor(props) {
         super(props);
 
-        const { id, currentId, type } = this.props;
         this.state = {
-            // タブフィードフラグ
-            isTabFeedList: (type === Type.Tab),
-            // アクティブ状態フラグ（開いているドキュメントのみ対応）
-            isActive: (id === currentId),
             // 削除処理フラグ
             isDelete: false,
         }
     }
+
+    /**
+     * タブフィードフラグ
+     * @returns {boolean}
+     */
+    isTabFeedList = () => {
+        const { type } = this.props;
+        return (type === Type.Tab);
+    };
+
+    /**
+     * アクティブ状態フラグ（開いているドキュメントのみ対応）
+     * @returns {boolean}
+     */
+    isActive = () => {
+        const { id, currentId } = this.props;
+        return (id === currentId);
+    };
 
     /**
      * 記事を新しいタブで開く
@@ -79,8 +92,7 @@ export class Item extends Component {
      * @returns {function()}
      */
     onClickButton = () => {
-        const { isTabFeedList } = this.state;
-        return isTabFeedList ? this.closeFeed : this.deleteFeed;
+        return this.isTabFeedList() ? this.closeFeed : this.deleteFeed;
     };
 
     /**
@@ -88,14 +100,13 @@ export class Item extends Component {
      * @returns {function()}
      */
     onClickFeed = () => {
-        const { isTabFeedList } = this.state;
-        return isTabFeedList ? this.moveFeed : this.openFeed;
+        return this.isTabFeedList() ? this.moveFeed : this.openFeed;
     };
 
     render() {
         const { url, title, favIconUrl } = this.props;
-        const { isActive, isDelete } = this.state;
-        const listActiveClass = (isActive) ? 'active' : '';
+        const { isDelete } = this.state;
+        const listActiveClass = (this.isActive()) ? 'active' : '';
         const listHiddenClass = (isDelete) ? 'hidden' : '';
         const image = favIconUrl ? favIconUrl : noImage;
 
