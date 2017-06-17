@@ -19,14 +19,13 @@ export class ControlBar extends Component {
             url: PropTypes.string.isRequired,
         })).isRequired,
 
-        tab: PropTypes.arrayOf(PropTypes.shape({
+        tab: PropTypes.shape({
             id: PropTypes.number.isRequired,
             url: PropTypes.string.isRequired,
             title: PropTypes.string.isRequired,
             favIconUrl: PropTypes.string.isRequired,
-        })).isRequired,
+        }).isRequired,
 
-        setup: PropTypes.func.isRequired,
         addFavorite: PropTypes.func.isRequired,
         removeFavorite: PropTypes.func.isRequired,
     };

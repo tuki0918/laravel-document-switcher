@@ -8,12 +8,12 @@ import { getOpenTabList } from './../lib/chrome';
 export class Tabs extends Component {
 
     static propTypes = {
-        tab: PropTypes.arrayOf(PropTypes.shape({
+        tab: PropTypes.shape({
             id: PropTypes.number.isRequired,
             url: PropTypes.string.isRequired,
             title: PropTypes.string.isRequired,
             favIconUrl: PropTypes.string.isRequired,
-        })).isRequired,
+        }).isRequired,
     };
 
     constructor(props) {

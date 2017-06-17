@@ -3,7 +3,8 @@ import { shallow } from 'enzyme';
 import { Favorite } from './Favorite';
 
 describe('<Favorite />', () => {
-    it('default behavior', () => {
+
+    it('renders: default', () => {
         const item = {
             id: 10,
             url: 'http://example.com/page10',
@@ -41,4 +42,5 @@ describe('<Favorite />', () => {
         expect(wrap.instance().items()).toHaveLength(3);
         expect(wrap.find('.not-found').exists()).toBe(false);
     });
+
 });

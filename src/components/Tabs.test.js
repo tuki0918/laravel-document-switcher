@@ -3,7 +3,8 @@ import { shallow } from 'enzyme';
 import { Tabs } from './Tabs';
 
 describe('<Tabs />', () => {
-    it('default behavior', () => {
+
+    it('renders: default', () => {
         const item = {
             id: 10,
             url: 'http://example.com/page10',
@@ -12,7 +13,7 @@ describe('<Tabs />', () => {
         };
 
         const props = {
-            tab: [],
+            tab: item,
         };
 
         const wrap = shallow(<Tabs {...props} />);
@@ -41,4 +42,5 @@ describe('<Tabs />', () => {
         expect(wrap.instance().items()).toHaveLength(3);
         expect(wrap.find('.not-found').exists()).toBe(false);
     });
+
 });

@@ -46,7 +46,7 @@ export class NavigationBar extends Component {
     items = () => {
         const { selected } = this.state;
         const data = this.data();
-        return data.map(function(nav, idx) {
+        return data.map((nav, idx) => {
             const isActive = (idx === selected) ? 'active' : '';
             return (
                 <div className={'tab-item ' + isActive} key={'nav-' + idx}>

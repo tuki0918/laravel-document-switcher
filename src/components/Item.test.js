@@ -5,7 +5,7 @@ import { Type } from './../constants';
 
 describe('<Item />', () => {
 
-    it('default behavior', () => {
+    it('renders: default', () => {
         const props = {
             id: 10,
             url: 'http://example.com/page10',
@@ -35,7 +35,7 @@ describe('<Item />', () => {
         expect(wrap.find('.hidden').exists()).toBe(true);
     });
 
-    it('renders an `.active`', () => {
+    it('renders: `.active`', () => {
         const props = {
             id: 10,
             url: 'http://example.com/page10',
@@ -55,7 +55,7 @@ describe('<Item />', () => {
         expect(wrap.find('.hidden').exists()).toBe(true);
     });
 
-    it('renders an Favorite Feed', () => {
+    it('renders: favorite feed', () => {
         const props = {
             id: 10,
             url: 'http://example.com/page10',
@@ -84,4 +84,5 @@ describe('<Item />', () => {
         expect(wrap.find('.active').exists()).toBe(false);
         expect(wrap.find('.hidden').exists()).toBe(true);
     });
+
 });
