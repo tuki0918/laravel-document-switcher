@@ -22,8 +22,10 @@ export class Item extends Component {
     constructor(props) {
         super(props);
 
-        const { id, currentId } = this.props;
+        const { id, currentId, type } = this.props;
         this.state = {
+            // タブフィードフラグ
+            isTabFeedList: (type === Type.Tab),
             // アクティブ状態フラグ（開いているドキュメントのみ対応）
             isActive: (id === currentId),
             // 削除処理フラグ
@@ -34,7 +36,7 @@ export class Item extends Component {
     /**
      * 記事を新しいタブで開く
      */
-    onOpenFeed = () => {
+    openFeed = () => {
         const { url } = this.props;
         if (url) {
             openTab(url);
@@ -44,7 +46,7 @@ export class Item extends Component {
     /**
      * 開いているタブを現在のタブの右に移動してアクティブにする
      */
-    onMoveFeed = () => {
+    moveFeed = () => {
         const { id } = this.props;
         if (id) {
             moveTabs2Right(id);
@@ -54,7 +56,7 @@ export class Item extends Component {
     /**
      * 記事をブラウザから閉じる
      */
-    onCloseFeed = () => {
+    closeFeed = () => {
         const { id } = this.props;
         if (id) {
             removeTabs(id);
@@ -67,24 +69,41 @@ export class Item extends Component {
     /**
      * 記事をお気に入りから削除する
      */
-    onDeleteFeed = () => {
+    deleteFeed = () => {
         const { url, removeFavorite } = this.props;
         removeFavorite(url);
     };
 
+    /**
+     * クローズボタンのアクション
+     * @returns {function()}
+     */
+    onClickButton = () => {
+        const { isTabFeedList } = this.state;
+        return isTabFeedList ? this.closeFeed : this.deleteFeed;
+    };
+
+    /**
+     * フィードのアクション
+     * @returns {function()}
+     */
+    onClickFeed = () => {
+        const { isTabFeedList } = this.state;
+        return isTabFeedList ? this.moveFeed : this.openFeed;
+    };
+
     render() {
-        const { url, title, favIconUrl, type } = this.props;
+        const { url, title, favIconUrl } = this.props;
         const { isActive, isDelete } = this.state;
-        const image = favIconUrl ? favIconUrl : noImage;
         const listActiveClass = (isActive) ? 'active' : '';
         const listHiddenClass = (isDelete) ? 'hidden' : '';
-        const isFeedList = (type === Type.Tab);
+        const image = favIconUrl ? favIconUrl : noImage;
 
         return (
             <li className={'list-group-item ' + listActiveClass + ' ' + listHiddenClass}>
                 <span className="icon icon-cancel-circled pull-right close"
-                      onClick={(isFeedList) ? this.onCloseFeed : this.onDeleteFeed} />
-                <div onClick={(isFeedList) ? this.onMoveFeed : this.onOpenFeed}>
+                      onClick={this.onClickButton} />
+                <div onClick={this.onClickFeed}>
                     <img className="img-circle media-object pull-left"
                          src={image} alt="thumbnail" width="32" height="32" />
                     <div className="media-body">
