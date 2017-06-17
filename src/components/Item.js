@@ -89,18 +89,18 @@ export class Item extends Component {
 
     /**
      * クローズボタンのアクション
-     * @returns {function()}
+     * @returns {*}
      */
     onClickButton = () => {
-        return this.isTabFeedList() ? this.closeFeed : this.deleteFeed;
+        return this.isTabFeedList() ? this.closeFeed() : this.deleteFeed();
     };
 
     /**
      * フィードのアクション
-     * @returns {function()}
+     * @returns {*}
      */
     onClickFeed = () => {
-        return this.isTabFeedList() ? this.moveFeed : this.openFeed;
+        return this.isTabFeedList() ? this.moveFeed() : this.openFeed();
     };
 
     render() {

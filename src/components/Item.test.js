@@ -2,6 +2,14 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import { Item } from './Item';
 import { Type } from './../constants';
+jest.mock('./../lib/chrome', () => {
+    return {
+        openTab: jest.fn(),
+        moveTabs2Right: jest.fn(),
+        removeTabs: jest.fn(),
+    };
+});
+import { openTab, moveTabs2Right, removeTabs } from './../lib/chrome';
 
 describe('<Item />', () => {
 
@@ -30,11 +38,15 @@ describe('<Item />', () => {
         expect(wrap.find('.media-body > strong').at(0).text()).toBe(props.title);
         expect(wrap.find('.media-body > p.url').at(0).text()).toBe(props.url);
 
-        const onClickButton = wrap.find('span').at(0).prop('onClick')();
-        expect(onClickButton).toEqual(wrap.instance().closeFeed);
+        const button1 = wrap.find('span').at(0);
+        expect(removeTabs).not.toBeCalled();
+        button1.simulate('click');
+        expect(removeTabs).toBeCalled();
 
-        const onClickFeed = wrap.find('div').at(0).prop('onClick')();
-        expect(onClickFeed).toEqual(wrap.instance().moveFeed);
+        const button2 = wrap.find('div').at(0);
+        expect(moveTabs2Right).not.toBeCalled();
+        button2.simulate('click');
+        expect(moveTabs2Right).toBeCalled();
 
         wrap.setState({ isDelete: true });
         expect(wrap.find('.active').exists()).toBe(false);
@@ -66,11 +78,15 @@ describe('<Item />', () => {
         expect(wrap.find('.media-body > strong').at(0).text()).toBe(props.title);
         expect(wrap.find('.media-body > p.url').at(0).text()).toBe(props.url);
 
-        const onClickButton = wrap.find('span').at(0).prop('onClick')();
-        expect(onClickButton).toEqual(wrap.instance().deleteFeed);
+        const button1 = wrap.find('span').at(0);
+        expect(props.removeFavorite).not.toBeCalled();
+        button1.simulate('click');
+        expect(props.removeFavorite).toBeCalled();
 
-        const onClickFeed = wrap.find('div').at(0).prop('onClick')();
-        expect(onClickFeed).toEqual(wrap.instance().openFeed);
+        const button2 = wrap.find('div').at(0);
+        expect(openTab).not.toBeCalled();
+        button2.simulate('click');
+        expect(openTab).toBeCalled();
 
         wrap.setState({ isDelete: true });
         expect(wrap.find('.active').exists()).toBe(false);
