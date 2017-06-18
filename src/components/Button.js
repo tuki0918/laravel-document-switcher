@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { change_version } from './../actions/ActionCreator';
 
 export class Button extends Component {
@@ -33,9 +34,12 @@ export class Button extends Component {
 
     render() {
         const { name, value } = this.props;
-        const btnClass = this.isActive() ? 'active' : '';
+        const btnClass = classNames('btn', 'btn-default',
+            {
+                'active' : this.isActive(),
+            });
         return (
-            <button className={'btn btn-default ' + btnClass}
+            <button className={btnClass}
                     value={value}
                     onClick={this.onClick}>
                 {name}

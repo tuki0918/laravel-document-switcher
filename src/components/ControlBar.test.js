@@ -50,7 +50,7 @@ describe('<ControlBar />', () => {
         expect(wrap.instance().items()).toHaveLength(4);
     });
 
-    it('renders: set document page ', () => {
+    it('renders: set document page', () => {
         wrap.setProps({
             tab: {...item, url: 'https://laravel.com/docs/5.4'},
         });
