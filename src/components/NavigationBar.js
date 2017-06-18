@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 
 export class NavigationBar extends Component {
 
@@ -47,9 +48,12 @@ export class NavigationBar extends Component {
         const { selected } = this.state;
         const data = this.data();
         return data.map((nav, idx) => {
-            const isActive = (idx === selected) ? 'active' : '';
+            const divClass = classNames('tab-item',
+                {
+                    'active' : (idx === selected),
+                });
             return (
-                <div className={'tab-item ' + isActive} key={'nav-' + idx}>
+                <div className={divClass} key={'nav-' + idx}>
                     <Link to={nav.path} onClick={this.onSwitch} data-idx={idx}>
                         {nav.name}
                     </Link>

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { favorite_remove } from './../actions/ActionCreator';
 import { Type } from './../constants';
 import { openTab, moveTabs2Right, removeTabs } from './../lib/chrome';
@@ -106,12 +107,14 @@ export class Item extends Component {
     render() {
         const { url, title, favIconUrl } = this.props;
         const { isDelete } = this.state;
-        const listActiveClass = (this.isActive()) ? 'active' : '';
-        const listHiddenClass = (isDelete) ? 'hidden' : '';
         const image = favIconUrl ? favIconUrl : noImage;
-
+        const listClass = classNames('list-group-item',
+            {
+                'active' : this.isActive(),
+                'hidden' : isDelete,
+            });
         return (
-            <li className={'list-group-item ' + listActiveClass + ' ' + listHiddenClass}>
+            <li className={listClass}>
                 <span className="icon icon-cancel-circled pull-right close"
                       onClick={this.onClickButton} />
                 <div onClick={this.onClickFeed}>

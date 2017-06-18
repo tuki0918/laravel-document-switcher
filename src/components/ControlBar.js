@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import Button from './Button';
 import { favorite_add, favorite_remove } from './../actions/ActionCreator';
 import { checkURL, convertToURL } from './../lib/link';
@@ -89,8 +90,15 @@ export class ControlBar extends Component {
     };
 
     render() {
-        const btnClass = this.isActive() ? '' : 'hidden';
-        const iconClass = this.isFavorite() ? 'icon-star' : 'icon-star-empty';
+        const btnClass = classNames('btn', 'btn-default',
+            {
+                'hidden' : !this.isActive(),
+            });
+        const iconClass = classNames('icon',
+            {
+                'icon-star' : this.isFavorite(),
+                'icon-star-empty' : !this.isFavorite(),
+            });
         const items = this.items();
         return (
             <header className="toolbar toolbar-header">
@@ -99,13 +107,13 @@ export class ControlBar extends Component {
                         {items}
                     </div>
 
-                    <button className={'btn btn-default ' + btnClass} onClick={this.onOpenDocument}>
+                    <button className={btnClass} onClick={this.onOpenDocument}>
                         <span className="icon icon-book-open icon-text" />
                         日本語ドキュメントを開く
                     </button>
 
                     <button className="btn btn-default pull-right" onClick={this.onToggleFavorite}>
-                        <span className={'icon ' + iconClass} />
+                        <span className={iconClass} />
                     </button>
 
                 </div>
