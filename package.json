@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "classnames": "^2.2.5",
     "photon": "github:connors/photon",
     "raven-js": "^3.16.0",
     "react": "^15.6.1",
